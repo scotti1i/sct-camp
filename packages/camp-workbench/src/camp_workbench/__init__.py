@@ -11,6 +11,6 @@
 历史上三个项目各写了一套本地 server + 三种界面长相,收敛到此为止。
 """
 
-from camp_workbench.server import Workbench
+from camp_workbench.server import Workbench, button
 
-__all__ = ["Workbench"]
+__all__ = ["Workbench", "button"]
