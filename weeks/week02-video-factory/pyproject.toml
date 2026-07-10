@@ -1,0 +1,18 @@
+[project]
+name = "week02-video-factory"
+version = "0.1.0"
+description = "Week 2:批量 AI 视频工厂——脚本、分镜 prompt、提交生成、结果写回飞书 Base"
+requires-python = ">=3.12"
+dependencies = ["camp-core", "camp-lark", "camp-report"]
+
+[project.scripts]
+week02 = "week02_video_factory.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-lark = { workspace = true }
+camp-report = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

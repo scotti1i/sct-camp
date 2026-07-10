@@ -1,0 +1,24 @@
+[project]
+name = "week03-gmvmax-daily"
+version = "0.1.0"
+description = "Week 3:GMV Max 投流诊断日报机器人(导出表 → 4 张手机竖版模块图 → 飞书卡片)"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-lark",
+    "camp-report",
+    "openpyxl>=3.1",
+    "pillow>=10",
+]
+
+[project.scripts]
+week03 = "week03_gmvmax_daily.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-lark = { workspace = true }
+camp-report = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

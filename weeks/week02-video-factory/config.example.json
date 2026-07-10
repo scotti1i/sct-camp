@@ -1,0 +1,49 @@
+{
+  "docs": {
+    "week2_doc": "https://my.feishu.cn/wiki/AXFbwAqwmiJuWhkQIPGc4lSXnrh",
+    "base_template": "https://my.feishu.cn/wiki/G9z4wAXqyi1hgCkx0rkcC0aLn5c"
+  },
+  "base": {
+    "enabled": false,
+    "base_token": "",
+    "tables": {
+      "products": "产品配置",
+      "references": "参考视频拆解",
+      "tasks": "视频生成任务",
+      "reviews": "验收复盘"
+    }
+  },
+  "video": {
+    "provider": "mock",
+    "default_duration": 10,
+    "aspect_ratio": "9:16",
+    "dreamina_model": "seedance2.0fast",
+    "poll_seconds": 0,
+    "download_dir": "output/videos"
+  },
+  "video_api": {
+    "endpoint": "",
+    "api_key_env": "VIDEO_API_KEY",
+    "submit_path": "/v1/videos/generations",
+    "poll_path": "/v1/videos/generations/{task_id}",
+    "model": "",
+    "timeout_seconds": 60,
+    "extra_payload": {},
+    "notes": "视频生成 API 接入配置;模型厂商开放接口、第三方服务、自建服务都可以通过 provider adapter 接入。密钥只放仓库根 .env,不要写在这里。"
+  },
+  "product": {
+    "name": "Portable Neck Fan",
+    "audience": "people commuting or working outdoors in hot weather",
+    "selling_points": [
+      "hands-free cooling",
+      "portable and lightweight",
+      "useful for commuting, office, and outdoor work"
+    ],
+    "forbidden_claims": [
+      "medical treatment",
+      "instant cure",
+      "guaranteed result"
+    ],
+    "language": "en"
+  }
+}

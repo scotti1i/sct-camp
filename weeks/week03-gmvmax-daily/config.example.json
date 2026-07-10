@@ -1,0 +1,14 @@
+{
+  "target_roi": 2.0,
+  "input": "data/sample/gmv-max-ads-export-sanitized.csv",
+  "settings": "data/sample/gmv-max-settings-sanitized.csv",
+  "chat_id": "",
+  "font_paths": [],
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
+    "真实使用:input/settings 换成你的后台导出表路径,chat_id 填内部测试群的 oc_xxx。",
+    "chat_id 怎么拿:lark-cli im chats list,或在群里让机器人收一条消息看回调。",
+    "font_paths 一般留空(自动找系统中文字体);模块图出豆腐块时再填一个 .ttf/.ttc 路径。",
+    "密钥(FEISHU_APP_ID / FEISHU_APP_SECRET)只放仓库根 .env,永远不要写进本文件。"
+  ]
+}
