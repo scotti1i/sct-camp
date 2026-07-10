@@ -8,6 +8,8 @@ members = [
     "camp-lark",
     "camp-report",
     "camp-workbench",
+    "news-radar",
+    "product-mining",
     "week02-video-factory",
     "week03-gmvmax-daily",
     "week04-competitor-watch",
@@ -441,6 +443,25 @@ wheels = [
 ]
 
 [[package]]
+name = "news-radar"
+version = "0.1.0"
+source = { editable = "projects/news-radar" }
+dependencies = [
+    { name = "camp-core" },
+    { name = "camp-lark" },
+    { name = "camp-report" },
+    { name = "camp-workbench" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "camp-core", editable = "packages/camp-core" },
+    { name = "camp-lark", editable = "packages/camp-lark" },
+    { name = "camp-report", editable = "packages/camp-report" },
+    { name = "camp-workbench", editable = "packages/camp-workbench" },
+]
+
+[[package]]
 name = "numpy"
 version = "2.5.1"
 source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
@@ -572,6 +593,23 @@ wheels = [
     { url = "https://pypi.tuna.tsinghua.edu.cn/packages/18/f0/a5595c1e8c3ae44b9828cb2f0fa8155e5095ef04d6327b8f61cf44a3df85/pillow-12.3.0-cp315-cp315t-win32.whl", hash = "sha256:1657923d2d45afb66526e5b933e5b3052e6bdea196c90d3abb2424e18c77dae8", size = 6474384, upload-time = "2026-07-01T11:56:18.855Z" },
     { url = "https://pypi.tuna.tsinghua.edu.cn/packages/e4/04/62bcd9f844984c5938d3b05264a61d797a29d3e0812341a8204af70bbdee/pillow-12.3.0-cp315-cp315t-win_amd64.whl", hash = "sha256:8cd2f7bdda092d99c9fc2fb7391354f306d01443d22785d0cbfafa2e2c8bb418", size = 7243537, upload-time = "2026-07-01T11:56:21.214Z" },
     { url = "https://pypi.tuna.tsinghua.edu.cn/packages/3d/68/1f3066acedf37673694a7141381d8f811ae97f30d34413d236abe7d489f1/pillow-12.3.0-cp315-cp315t-win_arm64.whl", hash = "sha256:06ff022112bc9cbf83b60f8e028d94ad87b60621706487e65f673de61610ab59", size = 2567491, upload-time = "2026-07-01T11:56:23.506Z" },
+]
+
+[[package]]
+name = "product-mining"
+version = "0.1.0"
+source = { editable = "projects/product-mining" }
+dependencies = [
+    { name = "camp-core" },
+    { name = "camp-report" },
+    { name = "camp-workbench" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "camp-core", editable = "packages/camp-core" },
+    { name = "camp-report", editable = "packages/camp-report" },
+    { name = "camp-workbench", editable = "packages/camp-workbench" },
 ]
 
 [[package]]

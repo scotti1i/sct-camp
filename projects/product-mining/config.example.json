@@ -1,0 +1,16 @@
+{
+  "category": "pet hair remover",
+  "market": "United States",
+  "rules": {
+    "min_cluster_count": 2,
+    "evidence_per_opportunity": 3
+  },
+  "serve_port": 8708,
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
+    "category/market:换成你自己研究的品类和目标市场(fetch 时自己传 --keyword)。",
+    "rules.min_cluster_count:一个痛点至少几条表达才算机会点;材料少可以降到 1。",
+    "rules.evidence_per_opportunity:需求地图里每个机会点附几条用户原话证据。",
+    "本项目零密钥:Reddit 公开 JSON 和 Amazon Woot JSON 都不要 key,密钥永远不进本文件。"
+  ]
+}

@@ -1,0 +1,23 @@
+# 选品挖掘:从海外真实用户表达里挖需求(评论/差评/趋势 → 需求信号 → 需求地图)
+[project]
+name = "product-mining"
+version = "0.1.0"
+description = "选品挖掘:海外用户表达 → 需求信号提取 → 需求地图(标准库 + camp 基座,零重依赖)"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-report",
+    "camp-workbench",
+]
+
+[project.scripts]
+mining = "product_mining.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-report = { workspace = true }
+camp-workbench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

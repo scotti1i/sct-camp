@@ -1,0 +1,174 @@
+{
+  "name": "AI 新闻雷达源(全部公开 RSS/Atom + GitHub 搜索,零密钥)",
+  "feeds": [
+    {
+      "name": "TLDR AI",
+      "url": "https://tldr.tech/api/rss/ai",
+      "tier": 4,
+      "bucket": "ai_news",
+      "note": "成熟 AI newsletter,适合发现高信号产品和技术变化。"
+    },
+    {
+      "name": "OpenAI News",
+      "url": "https://openai.com/news/rss.xml",
+      "tier": 4,
+      "bucket": "official",
+      "note": "官方发布,只保留会改变业务工作流的内容。"
+    },
+    {
+      "name": "Simon Willison",
+      "url": "https://simonwillison.net/atom/everything/",
+      "tier": 4,
+      "bucket": "builder",
+      "max_items": 8,
+      "note": "高信号 AI 工程实践、LLM 工具链和真实使用观察。"
+    },
+    {
+      "name": "Latent Space",
+      "url": "https://www.latent.space/feed",
+      "tier": 4,
+      "bucket": "ai_news",
+      "max_items": 6,
+      "note": "AI 工程、agent、模型生态和开发者趋势。"
+    },
+    {
+      "name": "Hacker News AI",
+      "url": "https://hnrss.org/newest?q=AI",
+      "tier": 3,
+      "bucket": "discussion",
+      "note": "技术社区讨论,发现开发者正在关注的新工具和争议。"
+    },
+    {
+      "name": "Hacker News Show HN - AI Workflow",
+      "url": "https://hnrss.org/newest?q=Show%20HN%20AI%20workflow",
+      "tier": 3,
+      "bucket": "practitioner",
+      "note": "builder 展示源,优先找已经能演示的小工具和工作流。"
+    },
+    {
+      "name": "Product Hunt",
+      "url": "https://www.producthunt.com/feed",
+      "tier": 3,
+      "bucket": "products",
+      "note": "新产品发现层,需要强过滤,不能直接进群。"
+    },
+    {
+      "name": "GitHub AI and ML",
+      "url": "https://github.blog/ai-and-ml/feed/",
+      "tier": 3,
+      "bucket": "builder",
+      "note": "AI builder 和开发工具变化。"
+    },
+    {
+      "name": "n8n Blog",
+      "url": "https://blog.n8n.io/rss/",
+      "tier": 3,
+      "bucket": "workflow",
+      "note": "工作流案例和自动化思路,适合做项目案例池。"
+    },
+    {
+      "name": "Zapier Blog",
+      "url": "https://zapier.com/blog/feeds/latest/",
+      "tier": 2,
+      "bucket": "workflow",
+      "note": "轻配置自动化案例源,只进备选,避免工具榜泛滥。"
+    },
+    {
+      "name": "Every - Chain of Thought",
+      "url": "https://every.to/chain-of-thought/feed.xml",
+      "tier": 3,
+      "bucket": "workflow",
+      "max_items": 6,
+      "note": "AI 产品、工作方式和知识工作提效。"
+    },
+    {
+      "name": "Google AI Blog",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+      "tier": 3,
+      "bucket": "official",
+      "note": "官方 AI 发布,需过滤纯研究/基础设施内容。"
+    },
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "tier": 2,
+      "bucket": "builder",
+      "note": "模型和开源生态,少量能转成教学。"
+    },
+    {
+      "name": "Reddit - n8n",
+      "url": "https://www.reddit.com/r/n8n/.rss",
+      "tier": 2,
+      "bucket": "practitioner",
+      "note": "工作流使用者社区,找真实自动化需求和案例;偶发限流属正常。"
+    },
+    {
+      "name": "Reddit - AI Agents",
+      "url": "https://www.reddit.com/r/AI_Agents/.rss",
+      "tier": 2,
+      "bucket": "practitioner",
+      "note": "AI agent 使用者社区,关注真实项目和工具组合;偶发限流属正常。"
+    },
+    {
+      "name": "YouTube - Matt Wolfe",
+      "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UChpleBmo18P08aKCIgti38g",
+      "tier": 4,
+      "bucket": "creator_signal",
+      "max_items": 5,
+      "note": "AI news + demos,周度 AI 选题源(官方 RSS,只有标题和链接,无播放数据)。"
+    },
+    {
+      "name": "YouTube - The AI Advantage",
+      "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCHhYXsLBEVVnbvsq57n1MTQ",
+      "tier": 4,
+      "bucket": "creator_signal",
+      "max_items": 5,
+      "note": "practical AI tutorials / business automation,适合找能上手的作业素材。"
+    },
+    {
+      "name": "YouTube - Nate Herk AI Automation",
+      "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC2ojq-nuP8ceeHqiroeKhBA",
+      "tier": 5,
+      "bucket": "creator_signal",
+      "max_items": 5,
+      "note": "AI automation / n8n / client workflow,优先找能转成教学项目的视频。"
+    }
+  ],
+  "github_searches": [
+    {
+      "name": "GitHub 高星 - Claude/Codex 工作流",
+      "query": "claude codex agent workflow stars:>500",
+      "tier": 5,
+      "bucket": "github_projects",
+      "note": "适配 Claude、Codex、agent 工作流的高星项目。"
+    },
+    {
+      "name": "GitHub 高星 - AI Agent 项目",
+      "query": "ai agent framework stars:>1000",
+      "tier": 5,
+      "bucket": "github_projects",
+      "note": "高星 agent 框架,判断是否能转成教学。"
+    },
+    {
+      "name": "GitHub 高星 - MCP 工具",
+      "query": "mcp server llm stars:>300",
+      "tier": 5,
+      "bucket": "github_projects",
+      "note": "MCP 和工具连接层,观察 AI 工作流生态。"
+    },
+    {
+      "name": "GitHub 高星 - AI Skills/模板",
+      "query": "llm skills project template automation stars:>200",
+      "tier": 4,
+      "bucket": "github_projects",
+      "note": "技能、项目模板、自动化模板,适合轻配置教学转化。"
+    },
+    {
+      "name": "GitHub 高星 - AI Video Workflow",
+      "query": "ai video workflow generator stars:>200",
+      "tier": 4,
+      "bucket": "github_projects",
+      "note": "AI 视频和内容生产工作流项目。"
+    }
+  ]
+}

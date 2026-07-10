@@ -1,0 +1,24 @@
+[project]
+name = "news-radar"
+version = "0.1.0"
+description = "AI 新闻雷达:RSS/GitHub 采集 → 双视角打分 → 今日雷达日报 → 飞书卡片"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-lark",
+    "camp-report",
+    "camp-workbench",
+]
+
+[project.scripts]
+radar = "news_radar.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-lark = { workspace = true }
+camp-report = { workspace = true }
+camp-workbench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

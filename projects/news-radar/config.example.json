@@ -1,0 +1,75 @@
+{
+  "title": "AI 新闻雷达",
+  "lookback_hours": 96,
+  "max_items_per_profile": 8,
+  "max_per_source": 3,
+  "serve_port": 8707,
+  "fetch": {
+    "timeout_seconds": 10,
+    "retries": 2,
+    "max_items_per_source": 8
+  },
+  "profiles": {
+    "owner": {
+      "label": "选题雷达(主理人视角)",
+      "note": "找增量信息:新工具、新玩法、能拆成内容或课程的项目。",
+      "min_score": 8,
+      "high": [
+        "agent", "agents", "workflow", "automation", "mcp", "claude", "claude code",
+        "codex", "copilot", "ai video", "skills", "template", "launch", "released",
+        "case study", "tutorial", "demo", "build", "prompt"
+      ],
+      "medium": [
+        "github", "open source", "creator", "shopify", "ecommerce", "ads", "tiktok",
+        "no-code", "api", "integration", "assistant", "productivity"
+      ],
+      "negative": [
+        "funding", "valuation", "lawsuit", "policy", "hiring", "data center",
+        "infrastructure", "benchmark", "dataset", "stock", "earnings", "raises"
+      ],
+      "bucket_boosts": {
+        "github_projects": 3,
+        "creator_signal": 2,
+        "discussion": 1,
+        "products": 1
+      }
+    },
+    "student": {
+      "label": "学员雷达(可上手视角)",
+      "note": "只留能落到销售/客服/内容/运营的低门槛动作,不追模型新闻。",
+      "min_score": 8,
+      "high": [
+        "workflow", "automation", "template", "no-code", "low-code", "zapier", "n8n",
+        "make", "airtable", "notion", "spreadsheet", "tutorial", "sales", "crm",
+        "lead", "customer support", "email", "invoice", "onboarding"
+      ],
+      "medium": [
+        "video", "creator", "shopify", "ecommerce", "ads", "content", "report",
+        "meeting", "calendar", "assistant", "use case", "playbook"
+      ],
+      "negative": [
+        "funding", "valuation", "lawsuit", "policy", "benchmark", "dataset",
+        "research", "paper", "kernel", "gpu", "inference", "quantization"
+      ],
+      "bucket_boosts": {
+        "workflow": 2,
+        "practitioner": 2,
+        "github_projects": -2
+      }
+    }
+  },
+  "llm": {
+    "base_url": "",
+    "model": "",
+    "api_key_env": "LLM_API_KEY"
+  },
+  "feishu": {
+    "chat_id": ""
+  },
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
+    "profiles:双雷达的关键词/门槛/加成都在这,改成你自己的两个视角(比如 老板/团队)。",
+    "llm 三项都填上且 .env 里有 LLM_API_KEY 才走 LLM 摘要;留空 = 纯规则摘要,零密钥可用。",
+    "feishu.chat_id 填目标群 chat_id(oc_ 开头);发送走 lark-cli 或 .env 里的 FEISHU_APP_ID/SECRET,密钥永远不进本文件。"
+  ]
+}

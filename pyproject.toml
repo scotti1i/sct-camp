@@ -1,7 +1,8 @@
 # SCT 超级个体营 · 开源基座(workspace 根)
 # 学员只需要:git pull → uv sync → uv run <周命令>
 [tool.uv.workspace]
-members = ["packages/*", "weeks/*"]
+# weeks/ = 按周直播交付的系统;projects/ = 营内实践项目(不按周编号)
+members = ["packages/*", "weeks/*", "projects/*"]
 
 # 国内网络:默认走清华 PyPI 镜像,随仓库分发,学员零配置
 [[tool.uv.index]]

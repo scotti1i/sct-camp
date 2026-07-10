@@ -10,9 +10,12 @@ __pycache__/
 !.env.example
 config.json
 weeks/*/config.json
+projects/*/config.json
 
 # 学员产出(git pull 永不冲突的关键)
 workspace/*
 !workspace/.gitkeep
 weeks/*/output/
 weeks/*/logs/
+projects/*/output/
+projects/*/logs/
