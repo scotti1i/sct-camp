@@ -1,0 +1,13 @@
+[project]
+name = "camp-lark"
+version = "0.1.0"
+description = "SCT 营基座:飞书唯一通道(lark-cli 优先,OpenAPI REST 兜底)"
+requires-python = ">=3.12"
+dependencies = ["camp-core"]
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

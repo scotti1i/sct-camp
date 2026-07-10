@@ -1,0 +1,14 @@
+[project]
+name = "camp-workbench"
+version = "0.1.0"
+description = "SCT 营基座:统一本地看板壳(所有工具的界面同一个长相)"
+requires-python = ">=3.12"
+dependencies = ["camp-core", "camp-report"]
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-report = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

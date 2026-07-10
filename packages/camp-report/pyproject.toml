@@ -1,0 +1,13 @@
+[project]
+name = "camp-report"
+version = "0.1.0"
+description = "SCT 营基座:HTML 报表渲染,统一纸感设计"
+requires-python = ">=3.12"
+dependencies = ["camp-core"]
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

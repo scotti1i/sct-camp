@@ -1,0 +1,53 @@
+version = 1
+revision = 3
+requires-python = ">=3.12"
+
+[manifest]
+members = [
+    "camp-core",
+    "camp-lark",
+    "camp-report",
+    "camp-workbench",
+]
+
+[[package]]
+name = "camp-core"
+version = "0.1.0"
+source = { editable = "packages/camp-core" }
+
+[[package]]
+name = "camp-lark"
+version = "0.1.0"
+source = { editable = "packages/camp-lark" }
+dependencies = [
+    { name = "camp-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "camp-core", editable = "packages/camp-core" }]
+
+[[package]]
+name = "camp-report"
+version = "0.1.0"
+source = { editable = "packages/camp-report" }
+dependencies = [
+    { name = "camp-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "camp-core", editable = "packages/camp-core" }]
+
+[[package]]
+name = "camp-workbench"
+version = "0.1.0"
+source = { editable = "packages/camp-workbench" }
+dependencies = [
+    { name = "camp-core" },
+    { name = "camp-report" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "camp-core", editable = "packages/camp-core" },
+    { name = "camp-report", editable = "packages/camp-report" },
+]

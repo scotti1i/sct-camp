@@ -1,0 +1,18 @@
+# 环境与缓存
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# 密钥与本地配置:只有 *.example.json 进仓库
+.env
+.env.*
+!.env.example
+config.json
+weeks/*/config.json
+
+# 学员产出(git pull 永不冲突的关键)
+workspace/*
+!workspace/.gitkeep
+weeks/*/output/
+weeks/*/logs/

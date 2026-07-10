@@ -1,0 +1,13 @@
+[project]
+name = "camp-core"
+version = "0.1.0"
+description = "SCT 营基座:配置、密钥、JSON IO、子进程、doctor 框架"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+camp = "camp_core.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
