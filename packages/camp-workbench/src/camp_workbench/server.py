@@ -15,7 +15,7 @@ from urllib.parse import parse_qs, quote, urlparse
 
 from camp_report.tokens import CSS_VARS
 
-PageHandler = Callable[[dict[str, list[str]]], str | dict[str, Any] | bytes]
+PageHandler = Callable[[dict[str, list[str]]], str | dict[str, Any] | bytes | tuple[bytes, str]]
 ActionHandler = Callable[[dict[str, str]], tuple[str, str]]
 
 _SHELL_STYLE = """
@@ -104,7 +104,11 @@ class Workbench:
             f'<div class="main">{notice}{content}</div></body></html>'
         )
 
-    def _respond(self, result: str | dict[str, Any] | bytes, current: str, msg: str) -> tuple[str, bytes]:
+    def _respond(self, result: str | dict[str, Any] | bytes | tuple[bytes, str],
+                 current: str, msg: str) -> tuple[str, bytes]:
+        if isinstance(result, tuple):  # (body, content_type):文件直出,壳不包装
+            body, content_type = result
+            return content_type, body
         if isinstance(result, bytes):
             return "application/octet-stream", result
         if isinstance(result, dict):

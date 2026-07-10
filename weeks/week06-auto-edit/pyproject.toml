@@ -1,0 +1,27 @@
+[project]
+name = "week06-auto-edit"
+version = "0.1.0"
+description = "Week 6:自动视频剪辑流水线(素材打标 → 话术分镜 → 配音 → 成片 / 剪映草稿)"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-report",
+    "camp-workbench",
+    "pillow>=10",
+    "edge-tts>=6.1",
+]
+
+[project.optional-dependencies]
+jianying = ["pyjianyingdraft>=0.2"]
+
+[project.scripts]
+week06 = "week06_auto_edit.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-report = { workspace = true }
+camp-workbench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -18,7 +18,7 @@
     "cta_label": "了解合作详情"
   },
   "contacts_csv": "data/contacts-demo.csv",
-  "serve_port": 8785,
+  "serve_port": 8705,
   "notes": [
     "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
     "真实使用:from_email 换成你在 Resend 验证过的域名邮箱;physical_address 和 unsubscribe_url 必须真实,占位文案不改,send --really 会拒发。",

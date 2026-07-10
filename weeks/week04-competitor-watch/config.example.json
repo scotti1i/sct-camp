@@ -30,7 +30,7 @@
     "action_due_days": 7,
     "campaign_publish_by": ""
   },
-  "serve_port": 8784,
+  "serve_port": 8704,
   "feishu": {
     "base_token": "",
     "table_id": "",

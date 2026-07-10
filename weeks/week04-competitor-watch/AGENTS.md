@@ -5,11 +5,14 @@ TikTok 竞品视频监控。改代码前先读仓库根 `AGENTS.md`(硬性约定
 ## 跑法
 
 ```bash
+uv run week04          # 默认入口:打开工作台(学员用;--no-browser 供测试,端口 8704)
+
+# CLI 子命令 = 管线,给 AI agent 和自动化用
 uv run week04 doctor   # 体检
 uv run week04 demo     # 零密钥零网络:演示快照 → output/analysis.json + demo-report.html
 uv run week04 fetch    # 真实采集(yt-dlp,外部源偶发 503 不是 bug)
 uv run week04 analyze  # 打分最近一轮 → daily-report.html
-uv run week04 serve    # 本地看板(--no-browser 不弹浏览器)
+uv run week04 serve    # 打开工作台(等价于无参数运行)
 uv run week04 sync     # 命中视频 → 飞书 Base(lark-cli,缺表自动建)
 ```
 
@@ -26,8 +29,8 @@ data/sample/*.json ──┐                          │
                      output/analysis.json(唯一数据源)
               ┌───────────────┼────────────────┐
               ▼               ▼                ▼
-     reports.write_report   cli.cmd_serve   cli.cmd_sync
-     HTML 日报              camp_workbench   camp_lark → Base
+     reports.write_report   workbench.py    cli.cmd_sync
+     HTML 日报              工作台页面       camp_lark → Base
 ```
 
 ## 本项目约定

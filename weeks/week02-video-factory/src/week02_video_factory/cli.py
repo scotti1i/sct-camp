@@ -1,4 +1,7 @@
-"""`uv run week02 <子命令>`:Week 2 批量视频工厂入口。
+"""`uv run week02`:Week 2 批量视频工厂入口。
+
+无参数 = 默认入口:浏览器打开工作台(点「跑一遍 Demo」出结果,全程不看终端)。
+子命令是管线,给 AI agent 和自动化用:
 
 demo    —— 零密钥,mock 流水线一条命令跑通,结尾出 HTML 结果报告
 doctor  —— 本周环境体检
@@ -8,13 +11,13 @@ scripts / prompts / submit / poll / sync —— 流水线单步执行
 from __future__ import annotations
 
 import argparse
+import sys
 from typing import Any
 
-from camp_core import command_exists, load_config, now_iso
+from camp_core import command_exists, load_config
 from camp_core.doctor import Check, core_checks, run_checks
-from camp_report import kv_card, save_report, table
 
-from week02_video_factory import pipeline
+from week02_video_factory import pipeline, workbench
 from week02_video_factory.providers import video_api_key
 
 
@@ -30,39 +33,11 @@ def _print_sync(synced: int) -> None:
 # ==================== demo ====================
 
 
-def _demo_report(config: dict[str, Any], tasks: list[dict[str, Any]], success: int) -> str:
-    product = config.get("product", {})
-    audience = product.get("audience", "")
-    rows = [
-        [t["任务编号"], t["产品名"], audience, t["分镜 prompt"][:80] + "…", t["状态"]]
-        for t in tasks
-    ]
-    body = kv_card("本次 demo", [
-        ("任务数", len(tasks)),
-        ("provider", "mock"),
-        ("生成成功", success),
-        ("生成时间", now_iso()),
-    ])
-    body += table(["任务编号", "产品", "人群", "分镜 prompt", "状态"], rows)
-    path = save_report(pipeline.OUTPUT_DIR / "demo-report.html",
-                       "Week 2 批量视频工厂", body, subtitle="demo 结果报告(mock 流水线)")
-    return str(path)
-
-
 def cmd_demo(args: argparse.Namespace) -> None:
     """完整 mock 流水线:脚本 → prompt → mock 提交 → 轮询到成功 → HTML 报告。"""
-    config = _config()
-    tasks = pipeline.generate_scripts(config, args.count)
-    print(f"[1/4] 已生成 {len(tasks)} 条脚本")
-    pipeline.generate_prompts(config)
-    print(f"[2/4] 已生成 {len(tasks)} 条分镜 prompt")
-    submitted, _ = pipeline.submit_tasks(config, "mock")
-    print(f"[3/4] 已 mock 提交 {submitted} 条任务")
-    success, tasks = pipeline.poll_tasks(config)
-    print(f"[4/4] 轮询完成,{success} 条生成成功")
-    report = _demo_report(config, tasks, success)
+    result = workbench.run_demo(args.count)
     print(f"\n任务数据: {pipeline.TASKS_FILE}")
-    print(f"结果报告: {report}")
+    print(f"结果报告: {result['report']}")
     print("真实生成看 README:改 config.json 的 video.provider,再跑 week02 submit / poll。")
 
 
@@ -158,8 +133,23 @@ def cmd_sync(args: argparse.Namespace) -> None:
 # ==================== 入口 ====================
 
 
+def cmd_workbench(argv: list[str]) -> None:
+    """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
+    parser = argparse.ArgumentParser(prog="week02", description="Week 2 批量 AI 视频工厂(工作台)")
+    parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}")
+    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    args = parser.parse_args(argv)
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="week02", description="Week 2 批量 AI 视频工厂")
+    argv = sys.argv[1:]
+    if not argv or (argv[0].startswith("-") and argv[0] not in ("-h", "--help")):
+        cmd_workbench(argv)
+        return
+    parser = argparse.ArgumentParser(
+        prog="week02", description="Week 2 批量 AI 视频工厂",
+        epilog="不带子命令直接运行 = 打开工作台(默认入口);子命令给 AI agent 和自动化用。")
     sub = parser.add_subparsers(dest="command", required=True)
 
     demo = sub.add_parser("demo", help="零密钥 mock 流水线一条命令跑通,出 HTML 报告")

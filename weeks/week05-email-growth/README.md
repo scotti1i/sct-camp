@@ -14,6 +14,16 @@
 ```bash
 cd sct-camp
 uv sync
+uv run week05
+```
+
+浏览器自动打开工作台(`http://127.0.0.1:8705`),点「跑一遍 Demo」:
+自带名单几秒生成完,总览页直接看到可发/拦截数,「邮件预览」页是全部邮件,
+「发送统计」页是 dry-run / 真发日志,还能一键打开最新 HTML 报告。全程不用看终端,零外发。
+
+CLI 子命令是同一条流水线的管线形态,给 AI agent 和自动化用:
+
+```bash
 uv run week05 demo
 ```
 
@@ -29,12 +39,13 @@ uv run week05 demo
 
 | 命令 | 作用 |
 |---|---|
+| `uv run week05` | **默认入口**:打开工作台(总览 / 邮件预览 / 发送统计;`--no-browser` 供测试) |
 | `uv run week05 demo` | 零密钥零外发:自带 demo 名单 → 全部个性化邮件 + HTML 报告 |
 | `uv run week05 doctor` | 体检:名单 / 模板 / 生成链路 / RESEND_API_KEY 状态 |
 | `uv run week05 preview` | 按 `config.json` 的名单生成邮件(`--contacts` 可覆盖,`--limit N` 只取前 N 个) |
 | `uv run week05 send` | **默认 dry-run**,只写 `output/send-log.jsonl`,不发任何邮件 |
 | `uv run week05 send --really --limit 1` | 真实发送(唯一开关);第一次只发 1 封给自己 |
-| `uv run week05 serve` | 本地看板:`/` 邮件预览列表,`/metrics` 发送统计(`--no-open` 不弹浏览器) |
+| `uv run week05 serve` | 打开工作台(等价于无参数运行;`--no-open` 不弹浏览器) |
 
 ## 换成你的名单
 
@@ -104,7 +115,7 @@ uv run week05 send --really --limit 1
 uv run week05 serve
 ```
 
-浏览器打开 `http://127.0.0.1:8785`:`/` 是邮件预览列表(含合规警告),`/metrics` 是发送统计和最近日志。界面由 `camp_workbench` 提供,数据都在你自己电脑上。
+浏览器打开 `http://127.0.0.1:8705`:「总览」可以直接点「跑一遍 Demo」,「邮件预览」是全部邮件列表(含合规警告),「发送统计」是发送统计和最近日志。界面由 `camp_workbench` 提供,数据都在你自己电脑上。
 
 ## 常见问题
 

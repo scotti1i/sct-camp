@@ -1,0 +1,35 @@
+{
+  "product": {
+    "name": "多肽修护精华乳",
+    "selling_points": [
+      "乳霜质地,上脸秒吸收",
+      "修护屏障,退泛红",
+      "一泵全脸,用量刚好"
+    ],
+    "audience": "25-35 岁敏感肌女性"
+  },
+  "llm": {
+    "model": "gpt-5-mini",
+    "vision_model": "gemini-3-flash-preview-nothinking"
+  },
+  "voice": {
+    "provider": "edge",
+    "edge": { "voice": "zh-CN-XiaoxiaoNeural", "rate": "+12%" },
+    "api": { "model": "tts-1", "voice": "alloy" }
+  },
+  "bgm": "input/bgm/bgm.mp3",
+  "jianying": {
+    "draft_root": "",
+    "draft_name": "week6-auto-cut"
+  },
+  "font_paths": [],
+  "serve_port": 8706,
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo(零密钥零 ffmpeg)。",
+    "本文件只放非密钥项(产品信息/模型名/声音)。LLM 的 key 和 base 一律写仓库根 .env:LLM_API_KEY / LLM_BASE_URL。",
+    "voice.provider 可选 edge(免费,不要 key)或 api(OpenAI 兼容 TTS;密钥写 .env 的 TTS_API_KEY / TTS_BASE_URL)。",
+    "font_paths 一般留空(自动找系统中文字体);字幕出豆腐块时再填一个 .ttf/.ttc 路径。",
+    "jianying.draft_root 留空自动探测;找不到时按剪映 → 全局设置 → 草稿位置 抄进来。",
+    "真实素材放 weeks/week06-auto-edit/input/assets/(每段 5-30 秒,竖屏最好),BGM 放 input/bgm/bgm.mp3。"
+  ]
+}

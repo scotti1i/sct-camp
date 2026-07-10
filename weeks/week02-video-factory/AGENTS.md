@@ -14,6 +14,9 @@
 ## 跑法
 
 ```bash
+uv run week02           # 默认入口:打开工作台(学员用;--no-browser 供测试,端口 8702)
+
+# CLI 子命令 = 管线,给 AI agent 和自动化用
 uv run week02 demo      # 零密钥 mock 流水线一条命令跑通(改代码后先跑这个)
 uv run week02 doctor    # 本周环境体检
 
@@ -27,7 +30,8 @@ uv run week02 sync      # 手动同步 output/tasks.json 到飞书 Base
 
 ## 代码地图
 
-- `cli.py` —— 子命令入口与 demo 报告
+- `cli.py` —— 入口:无参数开工作台,子命令走管线
+- `workbench.py` —— 工作台页面(总览/任务表/报告直出)与 `run_demo`(CLI 与页面共用)
 - `pipeline.py` —— 状态机、脚本/prompt 生成、Base 同步(只走 `camp_lark`)
 - `providers.py` —— provider 适配层;新增 provider 在这里加 submit/poll 并注册 `SUBMITTERS`
 

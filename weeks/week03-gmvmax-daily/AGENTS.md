@@ -5,6 +5,9 @@ GMV Max 投流诊断日报机器人。改代码前先读仓库根 `AGENTS.md`(�
 ## 跑法
 
 ```bash
+uv run week03          # 默认入口:打开工作台(学员用;--no-browser 供测试,端口 8703)
+
+# CLI 子命令 = 管线,给 AI agent 和自动化用
 uv run week03 doctor   # 体检
 uv run week03 demo     # 零密钥全链路:样例 → output/modules/*.png(4 张)+ demo-report.html
 uv run week03 send     # 需要 config.json 的 chat_id;图片上传还需要 .env 的 FEISHU_APP_ID/SECRET
@@ -20,8 +23,8 @@ uv run week03 send     # 需要 config.json 的 chat_id;图片上传还需要 .e
 settings 表 ─────┘                          │
                         ┌───────────────────┤
                         ▼                   ▼
-             render.render_modules()   cli._write_html_report()
-             4 张 PNG + manifest        camp-report HTML
+             render.render_modules()   workbench.report_body()
+             4 张 PNG + manifest        camp-report HTML + 工作台页面
                         │
                         ▼
                   cli.cmd_send()(camp_lark 上传 + 发卡)

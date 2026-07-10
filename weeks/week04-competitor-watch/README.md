@@ -10,6 +10,16 @@
 ```bash
 cd sct-camp
 uv sync
+uv run week04
+```
+
+浏览器自动打开工作台(`http://127.0.0.1:8704`),点「跑一遍 Demo」:
+演示快照几秒打分完,总览页直接看到概览和优先拆解清单,「视频清单」页是本轮全部视频,
+还能一键打开最新 HTML 日报。全程不用看终端。
+
+CLI 子命令是同一条流水线的管线形态,给 AI agent 和自动化用:
+
+```bash
 uv run week04 demo
 ```
 
@@ -22,13 +32,13 @@ uv run week04 demo
 
 demo 用的是 `data/sample/sample-snapshots.json` 手写演示数据(数字虚构),其中 4 条视频带前一轮快照,可以看到"播放涨幅"的判断逻辑。
 
-## 打开本地看板
+## 打开工作台
 
 ```bash
-uv run week04 serve            # http://127.0.0.1:8784
+uv run week04                  # http://127.0.0.1:8704(serve 子命令等价)
 ```
 
-- `/` 最新一轮分析结果:概览 + 优先拆解表
+- `/` 总览:跑一遍 Demo 按钮 + 概览 + 优先拆解表
 - `/videos` 本轮全部视频清单
 
 ## 换成你的真实竞品
@@ -69,11 +79,12 @@ uv run week04 sync
 
 | 命令 | 作用 |
 |---|---|
+| `uv run week04` | **默认入口**:打开工作台(总览 / 视频清单 / 报告;`--no-browser` 供测试) |
 | `uv run week04 demo` | 演示数据全链路:打分 → HTML 日报(零密钥零网络) |
 | `uv run week04 doctor` | 体检:yt-dlp / ffmpeg / Pillow / 演示数据 |
 | `uv run week04 fetch` | 采集竞品账号最新公开视频元数据(追加一轮快照) |
 | `uv run week04 analyze` | 打分最近一轮快照 → analysis.json + daily-report.html |
-| `uv run week04 serve` | 本地看板(`--port` 覆盖端口,`--no-browser` 不弹浏览器) |
+| `uv run week04 serve` | 打开工作台(等价于无参数运行;`--port` 覆盖端口,`--no-browser` 不弹浏览器) |
 | `uv run week04 sync` | 命中视频写进飞书 Base(缺表自动建) |
 
 ## 进阶:下载视频 / 抽关键帧 / whisper 逐字稿

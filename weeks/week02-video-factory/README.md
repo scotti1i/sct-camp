@@ -5,6 +5,16 @@
 ## 30 秒看到结果(不需要任何密钥)
 
 ```bash
+uv run week02
+```
+
+浏览器自动打开工作台(`http://127.0.0.1:8702`),点「跑一遍 Demo」:
+mock 流水线十几秒跑完,总览页直接看到任务数和成功数,「任务表」页是完整任务状态,
+还能一键打开最新 HTML 报告。不装飞书 CLI、不消耗任何积分,全程不用看终端。
+
+CLI 子命令是同一条流水线的管线形态,给 AI agent 和自动化用:
+
+```bash
 uv run week02 demo
 ```
 
@@ -12,8 +22,6 @@ uv run week02 demo
 
 - `output/tasks.json` —— 8 条任务的完整状态
 - `output/demo-report.html` —— 一页结果报告,浏览器直接打开
-
-demo 用 `mock` provider 走完整条流水线,不装飞书 CLI、不消耗任何积分。
 
 ## 环境体检
 

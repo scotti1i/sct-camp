@@ -5,11 +5,14 @@ AI 邮件增长工作台(合规触达,dry-run 优先)。改代码前先读仓库
 ## 跑法
 
 ```bash
+uv run week05                           # 默认入口:打开工作台(学员用;--no-browser 供测试,端口 8705)
+
+# CLI 子命令 = 管线,给 AI agent 和自动化用
 uv run week05 doctor                    # 体检
 uv run week05 demo                      # 零密钥零外发:demo 名单 → output/demo-report.html
 uv run week05 send                      # 默认 dry-run,只写 output/send-log.jsonl
 uv run week05 send --really --limit 1   # 真发(需 .env 的 RESEND_API_KEY + config 真实退订/地址)
-uv run week05 serve --no-open           # 看板:/ 预览,/metrics 统计
+uv run week05 serve --no-open           # 打开工作台(等价于无参数运行)
 ```
 
 改完代码先跑 `demo`,`output/demo-report.html` 里有全部预览邮件才算通过。
@@ -23,11 +26,11 @@ uv run week05 serve --no-open           # 看板:/ 预览,/metrics 统计
 compose.build_emails ──→ output/emails.json + summary.json(唯一数据源)
         │                         │
         ▼                         ▼
-cli._write_report          cli.cmd_send
+workbench.write_report     cli.cmd_send
 (camp-report HTML)          ├─ 默认 dry-run → output/send-log.jsonl
         │                   └─ --really → resend_api.send_batch(先过 hard_blockers)
         ▼
-cli.cmd_serve(camp_workbench:/ 读 emails.json,/metrics 读 send-log.jsonl)
+workbench.py(工作台页面:/ 总览,/emails 读 emails.json,/metrics 读 send-log.jsonl)
 ```
 
 ## 本项目约定

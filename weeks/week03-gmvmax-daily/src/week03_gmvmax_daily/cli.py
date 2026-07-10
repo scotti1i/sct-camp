@@ -1,6 +1,7 @@
 """week03 命令行:GMV Max 投流诊断日报机器人。
 
-子命令:
+无参数 = 默认入口:浏览器打开工作台(点「跑一遍 Demo」出结果,全程不看终端)。
+子命令是管线,给 AI agent 和自动化用:
   demo    零密钥,用自带脱敏样例走通 分析 → 4 张模块图 → HTML 日报
   doctor  体检本周依赖(openpyxl / Pillow / 中文字体 / 样例数据)
   analyze 清洗真实导出表,产出 output/clean.csv + analysis.json
@@ -11,23 +12,17 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from datetime import date
 from pathlib import Path
 
 from camp_core import load_config, read_json, write_json
 from camp_core.doctor import Check, core_checks, run_checks
 from camp_lark import send_card, upload_image
-from camp_report import kv_card, save_report, table
 
-from week03_gmvmax_daily.analyze import analyze, write_clean
-from week03_gmvmax_daily.render import find_font, render_modules
-
-PROJECT_DIR = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = PROJECT_DIR / "output"
-SAMPLE_ADS = PROJECT_DIR / "data" / "sample" / "gmv-max-ads-export-sanitized.csv"
-SAMPLE_SETTINGS = PROJECT_DIR / "data" / "sample" / "gmv-max-settings-sanitized.csv"
-ANALYSIS_JSON = OUTPUT_DIR / "analysis.json"
-MANIFEST_JSON = OUTPUT_DIR / "module-manifest.json"
+from week03_gmvmax_daily import ANALYSIS_JSON, MANIFEST_JSON, OUTPUT_DIR, PROJECT_DIR, SAMPLE_ADS
+from week03_gmvmax_daily import workbench
+from week03_gmvmax_daily.render import find_font
 
 
 def _resolve(path_text: str) -> Path:
@@ -35,56 +30,10 @@ def _resolve(path_text: str) -> Path:
     return path if path.is_absolute() else PROJECT_DIR / path
 
 
-def _run_analyze(input_path: Path, settings_path: Path | None, target_roi: float) -> dict:
-    """分析 + 落盘,demo/analyze 共用的唯一入口。"""
-    result, clean_rows = analyze(input_path, settings_path, target_roi)
-    clean_path = write_clean(clean_rows, OUTPUT_DIR / "clean.csv")
-    write_json(ANALYSIS_JSON, result)
-    print(f"OK clean={clean_path}")
-    print(f"OK analysis={ANALYSIS_JSON}")
-    return result
-
-
-def _run_render(result: dict, config: dict, report_name: str, report_date: str) -> dict:
-    """出图 + HTML 日报,demo/render 共用的唯一入口。"""
-    manifest = render_modules(result, OUTPUT_DIR / "modules", report_date, config.get("font_paths"))
-    for module in manifest["modules"]:
-        print(f"OK module={module['file']}")
-    report_path = _write_html_report(result, OUTPUT_DIR / report_name)
-    print(f"OK report={report_path}")
-    return manifest
-
-
-def _write_html_report(result: dict, path: Path) -> Path:
-    """camp_report 一页日报:KPI kv_card + 建议动作 table + Top 计划 table。"""
-    totals = result["totals"]
-    kpis = kv_card("核心指标", [
-        ("数据区间", result["data_range"]),
-        ("总消耗", f"{totals['spend']:.2f}"),
-        ("总 GMV", f"{totals['gmv']:.2f}"),
-        ("整体 ROI", f"{totals['roi']:.2f}(目标 {result['target_roi']:.2f})"),
-        ("订单数", int(totals["orders"])),
-        ("平均下单成本 CPO", f"{totals['cpo']:.2f}"),
-        ("点击到订单转化率", f"{totals['click_to_order']:.2%}"),
-    ])
-    actions = table(["对象", "建议动作"], [[a["who"], a["what"]] for a in result["actions"]])
-    campaigns = table(
-        ["计划", "消耗", "GMV", "ROI", "目标", "订单", "阶段", "判断"],
-        [[c["name"], f"{c['spend']:.0f}", f"{c['gmv']:.0f}", f"{c['roi']:.2f}",
-          f"{c['target_roi']:.2f}", c["orders"], c["stage"], c["verdict"]]
-         for c in result["campaigns"][:10]],
-    )
-    body = kpis + "<h2>今日动作</h2>" + actions + "<h2>计划诊断(按消耗 Top 10)</h2>" + campaigns
-    return save_report(path, "GMV Max 投流诊断日报", body, subtitle=f"数据源:{result['source']}")
-
-
 # ---------- 子命令 ----------
 
 def cmd_demo(args: argparse.Namespace) -> None:
-    config = load_config(PROJECT_DIR)
-    target_roi = float(config.get("target_roi") or 2.0)
-    result = _run_analyze(SAMPLE_ADS, SAMPLE_SETTINGS, target_roi)
-    _run_render(result, config, "demo-report.html", args.report_date)
+    workbench.run_demo(args.report_date)
     print("OK demo 完成。产物都在 output/;想发飞书:填好 config.json 的 chat_id 后跑 uv run week03 send")
 
 
@@ -118,7 +67,7 @@ def cmd_analyze(args: argparse.Namespace) -> None:
     target_roi = args.target_roi or float(config.get("target_roi") or 2.0)
     if not input_path.exists():
         raise SystemExit(f"找不到导出表:{input_path}。用 --input 指定,或先跑 uv run week03 demo")
-    _run_analyze(input_path, settings_path, target_roi)
+    workbench.run_analyze(input_path, settings_path, target_roi)
 
 
 def cmd_render(args: argparse.Namespace) -> None:
@@ -126,7 +75,7 @@ def cmd_render(args: argparse.Namespace) -> None:
     result = read_json(ANALYSIS_JSON)
     if not result:
         raise SystemExit(f"缺少 {ANALYSIS_JSON}:先跑 uv run week03 analyze(或 demo)")
-    _run_render(result, config, "daily-report.html", args.report_date)
+    workbench.run_render(result, config, "daily-report.html", args.report_date)
 
 
 def cmd_send(args: argparse.Namespace) -> None:
@@ -173,8 +122,23 @@ def _build_card(manifest: dict, uploaded: list[dict]) -> dict:
 
 # ---------- 入口 ----------
 
+def cmd_workbench(argv: list[str]) -> None:
+    """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
+    parser = argparse.ArgumentParser(prog="week03", description="GMV Max 投流诊断日报(工作台)")
+    parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}")
+    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    args = parser.parse_args(argv)
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="week03", description="GMV Max 投流诊断日报机器人")
+    argv = sys.argv[1:]
+    if not argv or (argv[0].startswith("-") and argv[0] not in ("-h", "--help")):
+        cmd_workbench(argv)
+        return
+    parser = argparse.ArgumentParser(
+        prog="week03", description="GMV Max 投流诊断日报机器人",
+        epilog="不带子命令直接运行 = 打开工作台(默认入口);子命令给 AI agent 和自动化用。")
     sub = parser.add_subparsers(dest="command", required=True)
     today = date.today().isoformat()
 

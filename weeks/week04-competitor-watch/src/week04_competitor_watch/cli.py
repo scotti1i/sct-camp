@@ -1,11 +1,12 @@
 """week04 命令行:TikTok 竞品视频监控。
 
-子命令:
+无参数 = 默认入口:浏览器打开工作台(点「跑一遍 Demo」出结果,全程不看终端)。
+子命令是管线,给 AI agent 和自动化用:
   demo    零密钥零网络:自带演示快照 → 打分 → output/demo-report.html
   doctor  体检本周依赖(yt-dlp / ffmpeg / Pillow / 演示数据)
   fetch   真实采集:config.json 的竞品账号 → output/snapshots.jsonl(追加一轮)
   analyze 打分最近一轮快照 → output/analysis.json + daily-report.html
-  serve   本地看板:/ 最新分析结果,/videos 视频清单
+  serve   打开工作台(等价于无参数运行)
   sync    命中视频写进飞书 Base(缺表自动建,字段结构与源项目一致)
 """
 
@@ -13,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -21,17 +23,10 @@ from camp_core import append_jsonl, load_config, now_iso, read_json, write_json
 from camp_core.doctor import Check, core_checks, run_checks
 from camp_core.proc import command_exists
 from camp_lark import lark_cli
-from camp_workbench import Workbench
 
-from week04_competitor_watch.core import build_analysis
+from week04_competitor_watch import ANALYSIS_JSON, OUTPUT_DIR, PROJECT_DIR, SAMPLE_JSON, SNAPSHOTS_JSONL
+from week04_competitor_watch import workbench
 from week04_competitor_watch.fetch import FRIENDLY_HINT, fetch_all
-from week04_competitor_watch.reports import actions_table, overview_card, videos_table, write_report
-
-PROJECT_DIR = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = PROJECT_DIR / "output"
-SAMPLE_JSON = PROJECT_DIR / "data" / "sample" / "sample-snapshots.json"
-SNAPSHOTS_JSONL = OUTPUT_DIR / "snapshots.jsonl"
-ANALYSIS_JSON = OUTPUT_DIR / "analysis.json"
 
 # 与源项目 tm_feishu.feishu_fields 完全一致,不要增删改名(老学员的 Base 靠它对齐)
 FEISHU_FIELDS = [
@@ -50,29 +45,14 @@ def _read_snapshot_lines(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in lines if line.strip()]
 
 
-def _run_analysis(snapshots: list[dict[str, Any]], config: dict[str, Any],
-                  report_name: str, source_label: str) -> dict[str, Any]:
-    """打分 + 落盘,demo/analyze 共用的唯一入口。"""
-    analysis = build_analysis(snapshots, config, source_label)
-    write_json(ANALYSIS_JSON, analysis)
-    report_path = write_report(analysis, OUTPUT_DIR / report_name)
-    print(f"OK analysis={ANALYSIS_JSON}")
-    print(f"OK report={report_path}")
-    print(f"OK 视频 {analysis['video_count']} 条,命中规则 {analysis['matched_count']} 条,"
-          f"进拆解清单 {len(analysis['actions'])} 条")
-    return analysis
-
-
 # ---------- 子命令 ----------
 
 def cmd_demo(_: argparse.Namespace) -> None:
-    config = load_config(PROJECT_DIR)
-    sample = read_json(SAMPLE_JSON, {})
-    snapshots = sample.get("snapshots", [])
-    if not snapshots:
-        raise SystemExit(f"演示数据缺失:{SAMPLE_JSON}(试试 git checkout weeks/week04-competitor-watch/data/sample)")
-    _run_analysis(snapshots, config, "demo-report.html", "data/sample 演示数据(数字虚构)")
-    print("OK demo 完成。看板:uv run week04 serve;真实采集:uv run week04 fetch")
+    try:
+        workbench.run_demo()
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
+    print("OK demo 完成。工作台:uv run week04;真实采集:uv run week04 fetch")
 
 
 def week_checks() -> list[Check]:
@@ -117,31 +97,11 @@ def cmd_analyze(_: argparse.Namespace) -> None:
     snapshots = _read_snapshot_lines(SNAPSHOTS_JSONL)
     if not snapshots:
         raise SystemExit(f"缺少 {SNAPSHOTS_JSONL}:先跑 uv run week04 fetch(或先用 demo 看效果)")
-    _run_analysis(snapshots, config, "daily-report.html", "output/snapshots.jsonl 真实采集")
+    workbench.run_analysis(snapshots, config, "daily-report.html", "output/snapshots.jsonl 真实采集")
 
 
 def cmd_serve(args: argparse.Namespace) -> None:
-    config = load_config(PROJECT_DIR)
-    port = args.port or int(config.get("serve_port") or 8784)
-    wb = Workbench("Week 4 · TikTok 竞品监控")
-    nav = '<p><a href="/">最新分析</a> · <a href="/videos">视频清单</a></p>'
-    empty = "<p>还没有分析结果:先跑 uv run week04 demo(或 fetch + analyze),刷新本页即可。</p>"
-
-    @wb.route("/")
-    def home(_: dict) -> str:
-        analysis = read_json(ANALYSIS_JSON)
-        if not analysis:
-            return nav + empty
-        return nav + overview_card(analysis) + "<h2>优先拆解(按优先级排序)</h2>" + actions_table(analysis)
-
-    @wb.route("/videos")
-    def videos(_: dict) -> str:
-        analysis = read_json(ANALYSIS_JSON)
-        if not analysis:
-            return nav + empty
-        return nav + "<h2>本轮视频清单</h2>" + videos_table(analysis.get("videos", []))
-
-    wb.serve(port=port, open_browser=not args.no_browser)
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
 
 
 # ---------- 飞书同步 ----------
@@ -214,14 +174,29 @@ def cmd_sync(_: argparse.Namespace) -> None:
 
 # ---------- 入口 ----------
 
+def cmd_workbench(argv: list[str]) -> None:
+    """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
+    parser = argparse.ArgumentParser(prog="week04", description="TikTok 竞品视频监控(工作台)")
+    parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}(config.json 的 serve_port 可覆盖)")
+    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    args = parser.parse_args(argv)
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="week04", description="TikTok 竞品视频监控")
+    argv = sys.argv[1:]
+    if not argv or (argv[0].startswith("-") and argv[0] not in ("-h", "--help")):
+        cmd_workbench(argv)
+        return
+    parser = argparse.ArgumentParser(
+        prog="week04", description="TikTok 竞品视频监控",
+        epilog="不带子命令直接运行 = 打开工作台(默认入口);子命令给 AI agent 和自动化用。")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("demo", help="零密钥跑通:演示快照 → 打分 → HTML 日报").set_defaults(func=cmd_demo)
     sub.add_parser("doctor", help="体检本周依赖").set_defaults(func=cmd_doctor)
     sub.add_parser("fetch", help="yt-dlp 采集竞品账号最新公开视频元数据").set_defaults(func=cmd_fetch)
     sub.add_parser("analyze", help="打分最近一轮快照并生成日报").set_defaults(func=cmd_analyze)
-    serve = sub.add_parser("serve", help="本地看板(/ 分析结果,/videos 视频清单)")
+    serve = sub.add_parser("serve", help="打开工作台(等价于无参数运行)")
     serve.add_argument("--port", type=int, default=0, help="覆盖 config.json 的 serve_port")
     serve.add_argument("--no-browser", action="store_true", help="不自动打开浏览器")
     serve.set_defaults(func=cmd_serve)

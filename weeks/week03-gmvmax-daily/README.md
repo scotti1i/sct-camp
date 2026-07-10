@@ -9,6 +9,16 @@
 ```bash
 cd sct-camp
 uv sync
+uv run week03
+```
+
+浏览器自动打开工作台(`http://127.0.0.1:8703`),点「跑一遍 Demo」:
+自带脱敏样例几秒跑完,总览页直接看到整体 ROI 和订单数,「核心指标」页是完整诊断,
+还能一键打开最新 HTML 日报。全程不用看终端。
+
+CLI 子命令是同一条流水线的管线形态,给 AI agent 和自动化用:
+
+```bash
 uv run week03 demo
 ```
 
@@ -51,6 +61,7 @@ uv run week03 send --chat-id oc_xxx
 
 | 命令 | 作用 |
 |---|---|
+| `uv run week03` | **默认入口**:打开工作台(总览 / 核心指标 / 报告;`--no-browser` 供测试) |
 | `uv run week03 demo` | 样例数据全链路:分析 → 4 张图 → HTML 日报(不发飞书) |
 | `uv run week03 doctor` | 体检:openpyxl / Pillow / 中文字体 / 样例数据 |
 | `uv run week03 analyze` | 清洗导出表 → `clean.csv` + `analysis.json` |
