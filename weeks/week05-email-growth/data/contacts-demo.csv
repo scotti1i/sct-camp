@@ -1,0 +1,5 @@
+email,first_name,company,role,segment,pain_point,offer,source,consent_status
+mia@example.com,Mia,GlowPet Studio,宠物类达人,creator,经常测评宠物清洁工具,免费样品 + 15% 佣金,手动整理的达人名单,consented
+leo@example.com,Leo,Northstar Gadgets,独立站主,b2b,新品页访问高但邮件召回弱,一次免费邮件诊断,历史询盘客户,consented
+ava@example.com,Ava,HomeFinds Daily,家居类达人,creator,需要可快速拍摄的清洁类选题,免费样品 + 联盟链接,公开主页主动留合作邮箱,business_contact
+noah@example.com,Noah,PeakOps Agency,服务商,b2b,客户跟进靠手工复制粘贴,AI 邮件跟进系统 demo,线下活动交换名片,consented

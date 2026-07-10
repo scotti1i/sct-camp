@@ -1,0 +1,46 @@
+{
+  "sources": [
+    {
+      "handle": "shopify",
+      "niche": "电商平台/品牌内容",
+      "why_watch": "观察电商品牌如何把产品能力包装成短视频素材"
+    },
+    {
+      "handle": "tiktok",
+      "niche": "平台官方/内容形式",
+      "why_watch": "观察平台官方如何做热点、活动和用户故事包装"
+    }
+  ],
+  "max_videos_per_account": 3,
+  "fetch": {
+    "sleep_seconds_between_accounts": 2
+  },
+  "rules": {
+    "min_views": 0,
+    "min_engagement_rate": 0,
+    "min_priority_score": 0,
+    "min_views_for_priority": 10000,
+    "min_engagement_for_priority": 0.04,
+    "comment_signal_threshold": 20,
+    "only_new": false,
+    "time_window": "",
+    "max_action_items": 5
+  },
+  "deadline": {
+    "action_due_days": 7,
+    "campaign_publish_by": ""
+  },
+  "serve_port": 8784,
+  "feishu": {
+    "base_token": "",
+    "table_id": "",
+    "base_url": ""
+  },
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
+    "sources:换成你自己盯的竞品账号,handle 只写用户名不带 @。",
+    "rules.time_window 可填 1d / 7d / 30d(只看这段时间发布的视频);留空不限。",
+    "feishu 三个字段留空即可:第一次 uv run week04 sync 会自动建 Base 和数据表并回填。",
+    "同步飞书走 lark-cli(npm install -g @larksuiteoapi/lark-cli 并登录授权),密钥永远不进本文件。"
+  ]
+}

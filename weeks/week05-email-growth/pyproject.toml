@@ -1,0 +1,23 @@
+# Week 5:AI 邮件增长工作台(合规触达:名单 → 个性化邮件 → dry-run → Resend 真发)
+[project]
+name = "week05-email-growth"
+version = "0.1.0"
+description = "Week 5:AI 邮件增长工作台(合规触达,dry-run 优先,零依赖第三方 SDK)"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-report",
+    "camp-workbench",
+]
+
+[project.scripts]
+week05 = "week05_email_growth.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-report = { workspace = true }
+camp-workbench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

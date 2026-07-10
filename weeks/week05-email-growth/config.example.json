@@ -1,0 +1,29 @@
+{
+  "resend": {
+    "from_email": "你的名字 <onboarding@resend.dev>",
+    "reply_to": "you@example.com"
+  },
+  "brand": {
+    "company_name": "你的公司名",
+    "sender_name": "你的名字",
+    "physical_address": "请填写真实公司/工作室邮寄地址",
+    "unsubscribe_url": "https://example.com/unsubscribe"
+  },
+  "campaign": {
+    "name": "第一批小规模测试",
+    "purpose": "creator_outreach",
+    "product_name": "你的产品",
+    "offer_name": "免费样品 + 联盟佣金",
+    "cta_url": "https://example.com/brief",
+    "cta_label": "了解合作详情"
+  },
+  "contacts_csv": "data/contacts-demo.csv",
+  "serve_port": 8785,
+  "notes": [
+    "首次运行任意子命令会自动把本文件复制成 config.json,直接就能跑 demo。",
+    "真实使用:from_email 换成你在 Resend 验证过的域名邮箱;physical_address 和 unsubscribe_url 必须真实,占位文案不改,send --really 会拒发。",
+    "contacts_csv 换成你的名单 CSV(字段见 README);没有 source/consent_status 的联系人会被默认拦截。",
+    "purpose 可选:creator_outreach / creator_bd_registration / b2b_outreach,影响主题行写法。",
+    "密钥 RESEND_API_KEY 只放仓库根 .env(参考 .env.example),永远不要写进本文件。"
+  ]
+}

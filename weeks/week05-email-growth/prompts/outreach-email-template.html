@@ -1,0 +1,113 @@
+<!--
+  Week5 邮件触达 HTML 模板(compose._render_template 按 {{变量}} 替换,值一律做 HTML 转义)
+
+  变量说明:
+  {{subject}}            邮件标题(<title> 用)
+  {{preview_text}}       邮箱列表里显示的预览摘要
+  {{headline}}           正文大标题
+  {{first_name}}         收件人名字
+  {{company}}            公司 / 账号名
+  {{role}}               对方角色
+  {{pain_point}}         为什么联系他
+  {{offer_name}}         合作 / 触达方案
+  {{cta_url}}            行动链接
+  {{cta_label}}          按钮文案
+  {{sender_name}}        发件人姓名
+  {{sender_email}}       发件人邮箱
+  {{company_name}}       发件方公司 / 工作室
+  {{physical_address}}   真实邮寄地址(合规必填,不许删)
+  {{unsubscribe_url}}    退订链接(合规必填,不许删)
+-->
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <title>{{subject}}</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f3f5f7;font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;color:#17202a;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+      {{preview_text}}
+    </div>
+
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;background:#f3f5f7;">
+      <tr>
+        <td align="center" style="padding:28px 12px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;max-width:640px;background:#ffffff;border:1px solid #d9e1e8;">
+            <tr>
+              <td style="padding:28px 30px 18px 30px;border-bottom:1px solid #e6edf2;">
+                <div style="font-size:12px;line-height:18px;color:#667085;font-weight:700;text-transform:uppercase;">
+                  {{company_name}}
+                </div>
+                <h1 style="margin:10px 0 0 0;font-size:22px;line-height:30px;font-weight:700;color:#101828;">
+                  {{headline}}
+                </h1>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:26px 30px 8px 30px;font-size:15px;line-height:24px;color:#26323f;">
+                <p style="margin:0 0 16px 0;">{{first_name}}，你好。</p>
+
+                <p style="margin:0 0 16px 0;">
+                  我看到你这边是 <strong>{{company}}</strong>，方向和 <strong>{{role}}</strong> 相关。
+                  这封邮件不是群发模板，主要是想聊一个很具体的点：
+                  <strong>{{pain_point}}</strong>。
+                </p>
+
+                <p style="margin:0 0 16px 0;">
+                  我们现在准备一个 <strong>{{offer_name}}</strong> 的小合作。如果你觉得方向匹配，可以点击下面的按钮了解详情。
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:8px 30px 24px 30px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                  <tr>
+                    <td bgcolor="#047857" style="border-radius:6px;">
+                      <a href="{{cta_url}}" style="display:inline-block;padding:12px 18px;font-size:14px;line-height:18px;color:#ffffff;text-decoration:none;font-weight:700;">
+                        {{cta_label}}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:0 30px 26px 30px;font-size:15px;line-height:24px;color:#26323f;">
+                <p style="margin:0 0 16px 0;">
+                  如果不合适，直接回复“不需要”就行，我不会继续打扰。
+                </p>
+
+                <p style="margin:0;">
+                  {{sender_name}}<br>
+                  {{company_name}}<br>
+                  <a href="mailto:{{sender_email}}" style="color:#047857;text-decoration:underline;">{{sender_email}}</a>
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:18px 30px 24px 30px;background:#f8fafc;border-top:1px solid #e6edf2;font-size:12px;line-height:18px;color:#667085;">
+                <p style="margin:0 0 8px 0;">
+                  你收到这封邮件，是因为我们根据合法业务联系理由整理了这批名单。
+                </p>
+                <p style="margin:0 0 8px 0;">
+                  邮寄地址：{{physical_address}}
+                </p>
+                <p style="margin:0;">
+                  不想再收到类似邮件，可以在这里退订：
+                  <a href="{{unsubscribe_url}}" style="color:#047857;text-decoration:underline;">{{unsubscribe_url}}</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

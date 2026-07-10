@@ -10,6 +10,8 @@ members = [
     "camp-workbench",
     "week02-video-factory",
     "week03-gmvmax-daily",
+    "week04-competitor-watch",
+    "week05-email-growth",
 ]
 
 [[package]]
@@ -182,4 +184,53 @@ requires-dist = [
     { name = "camp-report", editable = "packages/camp-report" },
     { name = "openpyxl", specifier = ">=3.1" },
     { name = "pillow", specifier = ">=10" },
+]
+
+[[package]]
+name = "week04-competitor-watch"
+version = "0.1.0"
+source = { editable = "weeks/week04-competitor-watch" }
+dependencies = [
+    { name = "camp-core" },
+    { name = "camp-lark" },
+    { name = "camp-report" },
+    { name = "camp-workbench" },
+    { name = "pillow" },
+    { name = "yt-dlp" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "camp-core", editable = "packages/camp-core" },
+    { name = "camp-lark", editable = "packages/camp-lark" },
+    { name = "camp-report", editable = "packages/camp-report" },
+    { name = "camp-workbench", editable = "packages/camp-workbench" },
+    { name = "pillow", specifier = ">=10" },
+    { name = "yt-dlp", specifier = ">=2025.1.1" },
+]
+
+[[package]]
+name = "week05-email-growth"
+version = "0.1.0"
+source = { editable = "weeks/week05-email-growth" }
+dependencies = [
+    { name = "camp-core" },
+    { name = "camp-report" },
+    { name = "camp-workbench" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "camp-core", editable = "packages/camp-core" },
+    { name = "camp-report", editable = "packages/camp-report" },
+    { name = "camp-workbench", editable = "packages/camp-workbench" },
+]
+
+[[package]]
+name = "yt-dlp"
+version = "2026.7.4"
+source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/47/c5/9972af4b472b0d55badf841ebafd2f98944cb0ae0f46e11d01f363ea5b91/yt_dlp-2026.7.4.tar.gz", hash = "sha256:b094813404f87a9dd2186f00815231df32e5fd8a5403be0f807b3bb2d21a4432", size = 3049326, upload-time = "2026-07-04T22:42:14.837Z" }
+wheels = [
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/f9/8a/cd4c9b02c10c563adfe78118310129641900e1cd6de888cfae2452072696/yt_dlp-2026.7.4-py3-none-any.whl", hash = "sha256:f11f2b11d5a8ac4059f9bdf29fa4407dc7c6bb00c5097e95ca22a7a9db518266", size = 3184705, upload-time = "2026-07-04T22:42:12.989Z" },
 ]

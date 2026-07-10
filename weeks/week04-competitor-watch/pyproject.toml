@@ -1,0 +1,26 @@
+[project]
+name = "week04-competitor-watch"
+version = "0.1.0"
+description = "Week 4:TikTok 竞品视频监控(yt-dlp 元数据采集 → 打分排序 → 日报/看板 → 飞书 Base)"
+requires-python = ">=3.12"
+dependencies = [
+    "camp-core",
+    "camp-lark",
+    "camp-report",
+    "camp-workbench",
+    "yt-dlp>=2025.1.1",
+    "pillow>=10",
+]
+
+[project.scripts]
+week04 = "week04_competitor_watch.cli:main"
+
+[tool.uv.sources]
+camp-core = { workspace = true }
+camp-lark = { workspace = true }
+camp-report = { workspace = true }
+camp-workbench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
