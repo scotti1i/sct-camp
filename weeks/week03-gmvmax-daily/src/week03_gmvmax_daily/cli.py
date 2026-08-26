@@ -122,11 +122,15 @@ def _build_card(manifest: dict, uploaded: list[dict]) -> dict:
 
 # ---------- 入口 ----------
 
+def cmd_serve(args: argparse.Namespace) -> None:
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
+
+
 def cmd_workbench(argv: list[str]) -> None:
     """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
     parser = argparse.ArgumentParser(prog="week03", description="GMV Max 投流诊断日报(工作台)")
     parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}")
-    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    parser.add_argument("--no-browser", "--no-open", action="store_true", help="不自动打开浏览器(测试用)")
     args = parser.parse_args(argv)
     workbench.serve(port=args.port, open_browser=not args.no_browser)
 
@@ -141,6 +145,12 @@ def main() -> None:
         epilog="不带子命令直接运行 = 打开工作台(默认入口);子命令给 AI agent 和自动化用。")
     sub = parser.add_subparsers(dest="command", required=True)
     today = date.today().isoformat()
+
+    serve = sub.add_parser("serve", help="打开工作台(等价于无参数运行)")
+    serve.add_argument("--port", type=int, default=0, help="覆盖 config.json 的 serve_port")
+    serve.add_argument("--no-browser", "--no-open", action="store_true", dest="no_browser",
+                       help="不自动打开浏览器")
+    serve.set_defaults(func=cmd_serve)
 
     demo = sub.add_parser("demo", help="零密钥跑通:样例数据 → 模块图 + HTML 日报")
     demo.add_argument("--report-date", default=today)

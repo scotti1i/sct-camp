@@ -133,11 +133,15 @@ def cmd_sync(args: argparse.Namespace) -> None:
 # ==================== 入口 ====================
 
 
+def cmd_serve(args: argparse.Namespace) -> None:
+    workbench.serve(port=args.port, open_browser=not args.no_browser)
+
+
 def cmd_workbench(argv: list[str]) -> None:
     """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
     parser = argparse.ArgumentParser(prog="week02", description="Week 2 批量 AI 视频工厂(工作台)")
     parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}")
-    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    parser.add_argument("--no-browser", "--no-open", action="store_true", help="不自动打开浏览器(测试用)")
     args = parser.parse_args(argv)
     workbench.serve(port=args.port, open_browser=not args.no_browser)
 
@@ -151,6 +155,12 @@ def main() -> None:
         prog="week02", description="Week 2 批量 AI 视频工厂",
         epilog="不带子命令直接运行 = 打开工作台(默认入口);子命令给 AI agent 和自动化用。")
     sub = parser.add_subparsers(dest="command", required=True)
+
+    serve = sub.add_parser("serve", help="打开工作台(等价于无参数运行)")
+    serve.add_argument("--port", type=int, default=0, help="覆盖 config.json 的 serve_port")
+    serve.add_argument("--no-browser", "--no-open", action="store_true", dest="no_browser",
+                       help="不自动打开浏览器")
+    serve.set_defaults(func=cmd_serve)
 
     demo = sub.add_parser("demo", help="零密钥 mock 流水线一条命令跑通,出 HTML 报告")
     demo.add_argument("--count", type=int, default=8, help="生成任务条数(默认 8)")

@@ -102,7 +102,7 @@ def cmd_jianying(_: argparse.Namespace) -> None:
 def cmd_serve(args: argparse.Namespace) -> None:
     config = load_config(PROJECT_DIR)
     port = args.port or int(config.get("serve_port") or 8706)
-    workbench.serve(config, port, open_browser=not args.no_open)
+    workbench.serve(config, port, open_browser=not args.no_browser)
 
 
 # ---------- 入口 ----------
@@ -133,7 +133,7 @@ def main() -> None:
 
     serve = sub.add_parser("serve", help="工作台(不带参数默认就是它)")
     serve.add_argument("--port", type=int, default=0, help="默认取 config.json 的 serve_port(8706)")
-    serve.add_argument("--no-open", action="store_true", help="不自动打开浏览器")
+    serve.add_argument("--no-browser", "--no-open", action="store_true", dest="no_browser", help="不自动打开浏览器")
     serve.set_defaults(func=cmd_serve)
 
     argv = sys.argv[1:] or ["serve"]

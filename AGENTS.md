@@ -10,6 +10,8 @@
 - 体检:`uv run camp doctor`(全局)/ `uv run <命令> doctor`(单项目;命令见根 README 表)
 - 每个项目(weeks/ 与 projects/ 一样)必有 `demo` 子命令:零密钥、用自带样例数据、一条命令出结果。改代码后先跑 demo 验证
 - **不带子命令 = 打开工作台**(七个系统统一,端口 8702-8708);子命令是给 AI agent 和自动化用的
+- 每个项目都有 `demo` / `doctor` / `serve` 三个通用子命令(2026-08-26 补齐 week02、week03 缺的 serve)
+- 停浏览器自弹一律 `--no-browser`,`--no-open` 保留为等价别名(argparse 双名,dest 统一 `no_browser`)
 
 ## 硬性约定(违反即 bug)
 

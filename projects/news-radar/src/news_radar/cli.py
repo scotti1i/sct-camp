@@ -113,7 +113,7 @@ def cmd_workbench(argv: list[str]) -> None:
     """无参数默认入口:浏览器打开工作台;子命令是给 AI agent 和自动化的。"""
     parser = argparse.ArgumentParser(prog="radar", description="AI 新闻雷达(工作台)")
     parser.add_argument("--port", type=int, default=0, help=f"默认 {workbench.PORT}(config.json 的 serve_port 可覆盖)")
-    parser.add_argument("--no-browser", action="store_true", help="不自动打开浏览器(测试用)")
+    parser.add_argument("--no-browser", "--no-open", action="store_true", help="不自动打开浏览器(测试用)")
     args = parser.parse_args(argv)
     workbench.serve(port=args.port, open_browser=not args.no_browser)
 
@@ -139,7 +139,7 @@ def main() -> None:
     send.set_defaults(func=cmd_send)
     serve = sub.add_parser("serve", help="打开工作台(等价于无参数运行)")
     serve.add_argument("--port", type=int, default=0, help="覆盖 config.json 的 serve_port")
-    serve.add_argument("--no-browser", action="store_true", help="不自动打开浏览器")
+    serve.add_argument("--no-browser", "--no-open", action="store_true", help="不自动打开浏览器")
     serve.set_defaults(func=cmd_serve)
     args = parser.parse_args()
     args.func(args)
