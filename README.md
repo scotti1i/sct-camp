@@ -2,6 +2,14 @@
 
 一个仓库装下营里所有能跑的系统。**每个系统都是一个本地网页工作台**——点一下出结果，不用看终端。
 
+对应的课程、在线演示和文章见 [SCTCamp 官网](https://sctcamp.com/)。第一次上手，可以先看这些工作流程：
+
+| 仓库里的系统 | 中文实操指南 | English guide |
+|---|---|---|
+| GMV Max 投流诊断 | [GMV Max 不消耗怎么查](https://sctcamp.com/posts/gmv-max-not-spending) | [GMV Max not spending](https://sctcamp.com/en/posts/gmv-max-not-spending) |
+| TikTok 竞品调研 | [用 Creative Center 看竞品素材](https://sctcamp.com/posts/tiktok-creative-center-competitor-research) | [Creative Center competitor research](https://sctcamp.com/en/posts/tiktok-creative-center-competitor-research) |
+| AI 带货视频 | [先写商品视频分镜表](https://sctcamp.com/posts/ai-product-video-shot-list) | [AI product video shot list](https://sctcamp.com/en/posts/ai-product-video-shot-list) |
+
 ## 装好（只做一次）
 
 ```bash
