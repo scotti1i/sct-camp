@@ -32,6 +32,8 @@ uv run week03 demo
 | `analysis.json` | 结构化诊断结果(出图和日报都吃这一份) |
 | `module-manifest.json` | 模块图清单,`send` 按它上传发卡 |
 
+想先看报表样例、导出字段和配置流程，可以打开 [中文实操指南](https://sctcamp.com/posts/gmv-max-daily-report) · [English guide](https://sctcamp.com/en/posts/gmv-max-daily-report)。
+
 ## 换成你的真实数据
 
 ```bash
