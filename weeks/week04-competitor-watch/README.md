@@ -32,6 +32,9 @@ uv run week04 demo
 
 demo 用的是 `data/sample/sample-snapshots.json` 手写演示数据(数字虚构),其中 4 条视频带前一轮快照,可以看到"播放涨幅"的判断逻辑。
 
+想先复算这组演示快照，可以查看逐项打分算例和对照 CSV。
+[中文指南](https://sctcamp.com/posts/tiktok-competitor-video-scoring) · [English guide](https://sctcamp.com/en/posts/tiktok-competitor-video-scoring)
+
 ## 打开工作台
 
 ```bash
