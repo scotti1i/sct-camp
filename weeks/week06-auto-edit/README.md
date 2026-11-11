@@ -31,6 +31,8 @@ demo 不碰任何外部服务:占位素材是 Pillow 现场画的,打标和话�
 | `demo/subs.ass` | 标准 ASS 字幕轨(*词* 转高亮黄) |
 | `demo-report.html` | 流程报告:每步一张卡(输入 → 输出),一页看懂流水线 |
 
+想核对分镜的素材截取时间和 ASS 字幕时间线，可以按同一组占位素材复跑 [中文算例](https://sctcamp.com/posts/product-video-storyboard-ass-captions) · [English walkthrough](https://sctcamp.com/en/posts/product-video-storyboard-ass-captions)。
+
 ## 环境体检
 
 ```bash
