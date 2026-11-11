@@ -2,6 +2,8 @@
 
 一个仓库装下营里所有能跑的系统。**每个系统都是一个本地网页工作台**——点一下出结果，不用看终端。
 
+作者为 [Scott（SCT 出海）](https://sctcamp.com/about)，英文介绍见 [About Scott](https://sctcamp.com/en/about)。
+
 对应的课程、在线演示和文章见 [SCTCamp 官网](https://sctcamp.com/)。第一次上手，可以先看这些工作流程：
 
 | 仓库里的系统 | 中文实操指南 | English guide |
