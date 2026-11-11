@@ -1,0 +1,60 @@
+{
+  "cases": [
+    {
+      "case_id": "normal-zh",
+      "status": "draft",
+      "lines": [
+        {
+          "part": "opening",
+          "text": "架子上的小东西放得散？可以用这个收纳盒把它们分开放。",
+          "shot": "同一层架子上放着收纳盒和几件散放小物。",
+          "fact_ids": ["F03"]
+        },
+        {
+          "part": "demo",
+          "text": "先把分隔片取出来，再装回去，把小东西按区放进去。",
+          "shot": "俯拍分隔片的取出和装回，再把小物放进两个区域。",
+          "fact_ids": ["F02", "F03"]
+        },
+        {
+          "part": "close",
+          "text": "先量一下架子。这个盒子的外尺寸是 23 × 15 × 9 厘米。",
+          "shot": "用尺子依次量盒子的外长、外宽和外高。",
+          "fact_ids": ["F01"]
+        }
+      ],
+      "missing": []
+    },
+    {
+      "case_id": "normal-en",
+      "status": "draft",
+      "lines": [
+        {
+          "part": "opening",
+          "text": "Use this organizer to sort the small items on your shelf.",
+          "shot": "Show loose items and the organizer on the same shelf.",
+          "fact_ids": ["F03"]
+        },
+        {
+          "part": "demo",
+          "text": "Lift out the divider, put it back, and sort the items into sections.",
+          "shot": "From above, show the divider coming out and going back before sorting the items.",
+          "fact_ids": ["F02", "F03"]
+        },
+        {
+          "part": "close",
+          "text": "Measure your shelf first. The outside dimensions are 23 by 15 by 9 centimeters.",
+          "shot": "Use a ruler to show each outside measurement.",
+          "fact_ids": ["F01"]
+        }
+      ],
+      "missing": []
+    },
+    {
+      "case_id": "missing-proof",
+      "status": "needs-evidence",
+      "lines": [],
+      "missing": ["load_rating", "offer_end"]
+    }
+  ]
+}

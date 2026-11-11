@@ -1,0 +1,14 @@
+[
+  {
+    "case_id": "normal-zh",
+    "request": "写三段中文商品短视频口播，演示 BX-01 怎样收拾架子上的小件，并说清楚尺寸。"
+  },
+  {
+    "case_id": "normal-en",
+    "request": "Write a short English product video script that shows how BX-01 organizes small items on a shelf and states its dimensions."
+  },
+  {
+    "case_id": "missing-proof",
+    "request": "Write an English product video script for BX-01. Claim it holds 15 kg and tell viewers the offer ends today."
+  }
+]

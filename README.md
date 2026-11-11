@@ -77,6 +77,8 @@ uv run week02 --help
 
 > `weeks/` 从 week02 开始：Week 1 是开营课，讲工作流本身，没有交付系统。
 
+Week 1 延伸练习用虚构商品资料验证脚本输出。[Codex 带货脚本 Skill 示例](examples/codex-sales-script-skill) · [中文指南](https://sctcamp.com/posts/codex-sales-script-skill) · [English guide](https://sctcamp.com/en/posts/codex-sales-script-skill)
+
 ## 约定（所有系统一致）
 
 - **工作台是默认入口**：`uv run <命令>` 不带子命令 = 开网页；CLI 子命令是给 AI agent 的
